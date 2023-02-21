@@ -4,21 +4,23 @@ import Navi from "./Navi";
 import ProductList from "./ProductList";
 import { Container, Row, Col } from "reactstrap";
 function App() {
+  let productInfo={title:"ProductList"}
+  let CategoryInfo={title:"CategoryList"}//encapsulation 
   return (
     <div className="App">
       <Container>
         <Row>
           <Navi />
-        </Row>//bir rowu 12 parçaya ayırıyor
+        </Row>
+        {/* bir row ekranı 12 parçaya ayırıyor */}
         <Row>
           <Col xs="3">
-            <CategoryList />
+            <CategoryList info={CategoryInfo} />
           </Col>
           <Col xs="9">
-            <ProductList /></Col>
-
+            <ProductList info={productInfo}/>
+            </Col>
         </Row>
-
       </Container>
 
 
