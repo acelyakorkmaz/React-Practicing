@@ -5,12 +5,18 @@ export default class CategoryList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [
-        { categoryId: 1, categoryName: "Baverages" },
-        { categoryId: 2, categoryName: "Condiments" },]
+      categories: []
       }
   }
-  
+  componentDidMount(){
+    this.getCategories();
+  }
+  getCategories=()=>{//api kullanımı
+    fetch("http://localhost:3000/categories")
+    .then(response=>response.json())
+    .then(data=>this.setState({categories:data}));
+
+  }
   render() {
     return (
       <div>
@@ -20,7 +26,7 @@ export default class CategoryList extends Component {
           {
             this.state.categories.map(category => (
             <ListGroupItem onClick={()=>this.props.changeCategory(category)} //event set state
-            key={category.categoryId}>{category.categoryName}</ListGroupItem>//performans için her bir elemana id ver sanal domda daha hızlı yakalanır
+            key={category.id}>{category.categoryName}</ListGroupItem>//performans için her bir elemana id ver sanal domda daha hızlı yakalanır
             ))//categorie gez her biri için list item oluştur
           }
 
