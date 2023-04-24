@@ -19,9 +19,9 @@ export default class App extends Component {
 
   
   getProducts = () => {//api kullanımı
-    fetch("http://localhost:3000/products")
-      .then(response => response.json())
-      .then(data => this.setState({ products: data }));
+    fetch("http://localhost:3000/products")//fetch apiye ulaşmayı sağlar
+      .then(response => response.json())//response jasona döndür
+      .then(data => this.setState({ products: data }));//statei ve kategorisini değiştirme
 
   }
   render() {
