@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Table } from 'reactstrap'
+import { Table, Button } from 'reactstrap'
 
 
 export default class ProductList extends Component {
+ 
   render() {
     return (
       <div>
@@ -26,6 +27,7 @@ export default class ProductList extends Component {
                 Units In Stock
               </th>
             </tr>
+            <th></th>
           </thead>
           <tbody>
             {this.props.products.map(product => (
@@ -47,6 +49,12 @@ export default class ProductList extends Component {
                 <td>
                   {product.unitsInStock}
                 </td>
+                <td><Button onClick={()=>this.props.addToCard(product)}
+                  color="info"
+                  outline
+                >
+                  Add
+                </Button  ></td>
               </tr>
             ))}
 

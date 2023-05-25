@@ -7,9 +7,9 @@ import { Container, Row, Col } from "reactstrap";
 
 export default class App extends Component {
   state = {
-    currentCategory: "", products: []
+    currentCategory: "", products:[] , cart: []
   }
-  componentDidMount(){
+  componentDidMount() {
     this.getProducts();
   }
 
@@ -19,15 +19,29 @@ export default class App extends Component {
     this.getProducts(category.id);
   };
 
-  
+
   getProducts = (categoryId) => {//api kullanımı
-    let url="http://localhost:3000/products";
-    if(categoryId){
-      url+="?categoryId="+categoryId;//Eğer parametre ile seourl gönderilmişse urlin sonuna ekle
+    let url = "http://localhost:3000/products";
+    if (categoryId) {
+      url += "?categoryId=" + categoryId;//Eğer parametre ile seourl gönderilmişse urlin sonuna ekle
     }
     fetch(url)//fetch apiye ulaşmayı sağlar
       .then(response => response.json())//response jasona döndür
       .then(data => this.setState({ products: data }));//statei ve kategorisini değiştirme
+
+  }
+
+  addToCard = (product) => {
+   let newCart=this.state.cart;
+   var addedItem=newCart.find(c=>c.product.id===product.id);
+   if(addedItem){
+    addedItem.quantity+=1;
+   }
+   else (
+    newCart.push({product:product,quantity:1})
+
+   )
+   this.setState({cart:newCart});
 
   }
   render() {
@@ -39,9 +53,8 @@ export default class App extends Component {
     return (
       <div className="App">
         <Container>
-          <Row>
-            <Navi />
-          </Row>
+
+          <Navi  cart={this.state.cart}/>
           {/* bir row ekranı 12 parçaya ayırıyor */}
           <Row>
             <Col xs="3">
@@ -50,6 +63,7 @@ export default class App extends Component {
             <Col xs="9">
               <ProductList //props
                 products={this.state.products}
+                addToCard={this.addToCard}
                 currentCategory={this.state.currentCategory} info={productInfo} />
             </Col>
           </Row>
