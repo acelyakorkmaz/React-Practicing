@@ -9,7 +9,7 @@ export default class CategoryList extends Component {
       }
   }
   componentDidMount(){
-    this.getCategories();
+    this.getCategories();//component yerleşti, kategorileri doldur
   }
   getCategories=()=>{//api kullanımı
     fetch("http://localhost:3000/categories")
@@ -25,14 +25,15 @@ export default class CategoryList extends Component {
         <ListGroup>
           {
             this.state.categories.map(category => (
-            <ListGroupItem onClick={()=>this.props.changeCategory(category)} //event set state
+            <ListGroupItem active={category.categoryName===this.props.currentCategory?true:false}//kategorinin ismi aktif kategoriye eşitse true değilse false
+             onClick={()=>this.props.changeCategory(category)} //event set state
             key={category.id}>{category.categoryName}</ListGroupItem>//performans için her bir elemana id ver sanal domda daha hızlı yakalanır
             ))//categorie gez her biri için list item oluştur
           }
 
 
         </ListGroup>
-        <h4>{this.props.currentCategory}</h4>
+        {/* <h4>{this.props.currentCategory}</h4> */}
       </div>
     )
   }

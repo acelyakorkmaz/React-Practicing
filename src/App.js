@@ -15,11 +15,17 @@ export default class App extends Component {
 
   changeCategory = category => {//fonksiyon
     this.setState({ currentCategory: category.categoryName });
+    console.log(category);
+    this.getProducts(category.id);
   };
 
   
-  getProducts = () => {//api kullanımı
-    fetch("http://localhost:3000/products")//fetch apiye ulaşmayı sağlar
+  getProducts = (categoryId) => {//api kullanımı
+    let url="http://localhost:3000/products";
+    if(categoryId){
+      url+="?categoryId="+categoryId;//Eğer parametre ile seourl gönderilmişse urlin sonuna ekle
+    }
+    fetch(url)//fetch apiye ulaşmayı sağlar
       .then(response => response.json())//response jasona döndür
       .then(data => this.setState({ products: data }));//statei ve kategorisini değiştirme
 
